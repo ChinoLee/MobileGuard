@@ -10,6 +10,7 @@ import com.example.chino_lee.mobileguard.m1home.utils.VersionUpdateUtils;
 public class SplashActivity extends AppCompatActivity {
     private TextView mTvVersion;
     private String mVersion;
+    int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
