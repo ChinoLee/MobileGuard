@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/launch_bg"
-    tools:context="com.example.chino_lee.mobileguard.SplashActivity">
+    tools:context="com.example.chino_lee.mobileguard.cn.example.chino_lee.mobileguard.SplashActivity">
    <ProgressBar
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
