@@ -20,6 +20,12 @@
             </intent-filter>
         </activity>
         <activity android:name="cn.edu.gdmec.android.mobileguard.m1home.HomeActivity"/>
+        <activity android:name="cn.edu.gdmec.android.mobileguard.m2theftguard.LostFindActivity"/>
+        <activity android:name="cn.edu.gdmec.android.mobileguard.m2theftguard.SetUp1Activity"/>
+        <activity android:name="cn.edu.gdmec.android.mobileguard.m2theftguard.SetUp2Activity"/>
+        <activity android:name="cn.edu.gdmec.android.mobileguard.m2theftguard.SetUp3Activity"/>
+        <activity android:name="cn.edu.gdmec.android.mobileguard.m2theftguard.SetUp4Activity"/>
+
     </application>
 
 </manifest>

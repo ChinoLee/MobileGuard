@@ -22,8 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
-
 /**
  * Created by Chino-Lee on 2017/9/25.
  */
@@ -96,7 +94,7 @@ public class VersionUpdateUtils {
         builder.setTitle("检查到有新版本："+versionEntity.versionCode);
         builder.setMessage(versionEntity.description);
         builder.setCancelable(false);
-        builder.setIcon(cn.edu.gdmec.android.mobileguard.R.mipmap.ic_launcher_round);
+        builder.setIcon(com.example.chino_lee.mobileguard.R.mipmap.ic_launcher_round);
         builder.setPositiveButton("立刻升级", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

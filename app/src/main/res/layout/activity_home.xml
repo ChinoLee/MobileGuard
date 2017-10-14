@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:background="@drawable/bg_home"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
         <ImageView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_home"
             android:textSize="16sp"
-            android:text="主淫，我是你的手机小卫士"
+            android:text="手机安全卫士"
             android:textColor="#90000000"
             android:textScaleX="1.1"
             android:typeface="normal"/>
@@ -38,7 +38,6 @@
             android:horizontalSpacing="10dp"
             android:verticalSpacing="10dp"
             android:numColumns="3">
-
         </GridView>
     </RelativeLayout>
 </LinearLayout>
