@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
+import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m1home.HomeActivity;
 import cn.edu.gdmec.android.mobileguard.m1home.entity.VersionEntity;
 
@@ -94,7 +95,7 @@ public class VersionUpdateUtils {
         builder.setTitle("检查到有新版本："+versionEntity.versionCode);
         builder.setMessage(versionEntity.description);
         builder.setCancelable(false);
-        builder.setIcon(com.example.chino_lee.mobileguard.R.mipmap.ic_launcher_round);
+        builder.setIcon(R.mipmap.ic_launcher_round);
         builder.setPositiveButton("立刻升级", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.example.chino_lee.mobileguard.R;
+import cn.edu.gdmec.android.mobileguard.R;
+
 
 /**
  * Created by Chino-Lee on 2017/10/14.

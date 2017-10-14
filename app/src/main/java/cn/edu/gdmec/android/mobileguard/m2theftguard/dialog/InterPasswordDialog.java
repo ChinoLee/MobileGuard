@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.chino_lee.mobileguard.R;
+import cn.edu.gdmec.android.mobileguard.R;
+
 
 /**
  * Created by Chino-Lee on 2017/10/14.

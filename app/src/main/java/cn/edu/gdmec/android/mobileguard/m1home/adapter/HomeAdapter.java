@@ -7,8 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import cn.edu.gdmec.android.mobileguard.R;
 
-import com.example.chino_lee.mobileguard.R;
 
 /**
  * Created by Chino-Lee on 2017/9/27.
