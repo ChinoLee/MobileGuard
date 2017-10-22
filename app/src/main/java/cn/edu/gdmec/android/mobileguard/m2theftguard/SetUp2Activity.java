@@ -1,11 +1,13 @@
 package cn.edu.gdmec.android.mobileguard.m2theftguard;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import cn.edu.gdmec.android.mobileguard.R;
 
@@ -52,8 +54,25 @@ public class SetUp2Activity extends BaseSetUpActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_bind_sim:
+                bindSIM();
+                break;
+        }
 
     }
-
+private void bindSIM(){
+    if(!isBind()){
+        String simSerialNumber = mTelephonyManager.getSimSerialNumber();
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString("sim",simSerialNumber);
+        edit.commit();
+        Toast.makeText(this, "SIM卡绑定成功", Toast.LENGTH_SHORT).show();
+        mBindSIMBtn.setEnabled(false);
+    }else {
+        Toast.makeText(this, "SIM卡已经绑定", Toast.LENGTH_SHORT).show();
+        mBindSIMBtn.setEnabled(false);
+    }
+}
 
 }
