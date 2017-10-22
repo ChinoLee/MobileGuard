@@ -55,6 +55,7 @@ public class ContactAdapter extends BaseAdapter{
         return view;
     }
     static class ViewHolder{
+
         TextView mNameTV;
         TextView mPhoneTV;
     }
