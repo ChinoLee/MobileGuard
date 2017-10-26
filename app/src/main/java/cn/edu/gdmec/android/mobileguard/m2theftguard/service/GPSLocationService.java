@@ -30,6 +30,6 @@ public class GPSLocationService extends Service {
     }
 
     private class MyListener implements LocationManager {
-
+        //...
     }
 }
