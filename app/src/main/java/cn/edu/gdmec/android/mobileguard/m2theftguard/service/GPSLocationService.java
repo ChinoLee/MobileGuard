@@ -1,5 +1,7 @@
 package cn.edu.gdmec.android.mobileguard.m2theftguard.service;
 
+
+import android.Manifest;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +15,7 @@ import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsManager;
 
-import java.util.jar.Manifest;
+
 
 /**
  * Created by Chino-Lee on 2017/10/26.
@@ -39,7 +41,10 @@ public class GPSLocationService extends Service {
         criteria.setCostAllowed(true);//允许产生开销
         String name = lm.getBestProvider(criteria,true);
         //权限检查
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED){
             return;
         }
         lm.requestLocationUpdates(name, 0, 0, listener);
