@@ -2,13 +2,18 @@ package cn.edu.gdmec.android.mobileguard.m2theftguard.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
 
-import java.util.ServiceConfigurationError;
-
-import cn.edu.gdmec.android.mobileguard.m2theftguard.receiver.MyDeviceAdminReceiver;
+import java.util.jar.Manifest;
 
 /**
  * Created by Chino-Lee on 2017/10/26.
@@ -27,9 +32,53 @@ public class GPSLocationService extends Service {
         super.onCreate();
         lm = (LocationManager) getSystemService(LOCATION_SERVICE);
         listener = new MyListener();
+        //criteria 查询条件
+        //true只返回可用的位置提供者
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);//获取准确的位置。
+        criteria.setCostAllowed(true);//允许产生开销
+        String name = lm.getBestProvider(criteria,true);
+        //权限检查
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            return;
+        }
+        lm.requestLocationUpdates(name, 0, 0, listener);
     }
 
-    private class MyListener implements LocationManager {
-        //...
+    private class MyListener implements LocationListener{
+        @Override
+        public void onLocationChanged(Location location) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("accuracy:"+location.getAccuracy()+"\n");
+            sb.append("speed:"+location.getSpeed()+"\n");
+            sb.append("Logitude:"+location.getLongitude()+"\n");
+            sb.append("Latitude:"+location.getLatitude()+"\n");
+            String result = sb.toString();
+            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+            String safenumber = sp.getString("safenumber","");
+            SmsManager.getDefault().sendTextMessage(safenumber, null, result, null, null);
+            stopSelf();
+        }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
+        }
+
+    }
+    @Override
+    public void  onDestroy() {
+        super.onDestroy();
+        lm.removeUpdates(listener);
+        listener = null;
     }
 }
