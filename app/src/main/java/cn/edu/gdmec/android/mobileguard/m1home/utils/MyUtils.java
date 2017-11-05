@@ -5,14 +5,15 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 /**
- * Created by Chino-Lee on 2017/9/25.
+ * Created by 10255 on 2017/9/21.
  */
 
 public class MyUtils {
     public static String getVersion(Context context){
-        PackageManager packageManager = context.getPackageManager();
+        PackageManager packageManager=context.getPackageManager();
+        PackageInfo packageInfo= null;
         try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(),0);
+            packageInfo = packageManager.getPackageInfo(context.getPackageName(),0);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

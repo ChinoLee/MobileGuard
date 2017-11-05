@@ -12,7 +12,7 @@ import java.util.List;
 import cn.edu.gdmec.android.mobileguard.m2theftguard.entity.ContactInfo;
 
 /**
- * Created by Administrator on 2017/10/19 0019.
+ * Created by student on 17/10/17.
  */
 
 public class ContactInfoParser {

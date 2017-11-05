@@ -10,11 +10,7 @@ import android.widget.ToggleButton;
 import cn.edu.gdmec.android.mobileguard.R;
 
 
-/**
- * Created by Chino-Lee on 2017/10/14.
- */
-
-public class SetUp4Activity extends BaseSetUpActivity {
+public class Setup4Activity extends BaseSetUpActivity {
     private TextView mStatusTV;
     private ToggleButton mToggleButton;
     @Override
@@ -24,28 +20,25 @@ public class SetUp4Activity extends BaseSetUpActivity {
         ((RadioButton) findViewById(R.id.rb_four)).setChecked(true);
         initView();
     }
-
     private void initView() {
         ((RadioButton)findViewById(R.id.rb_four)).setChecked(true);
-        mStatusTV = (TextView) findViewById(R.id.tv_setup4_status);
-        mToggleButton = (ToggleButton) findViewById(R.id.togglebtn_securityfunction);
-        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-
+        mStatusTV=(TextView)findViewById(R.id.tv_setup4_status);
+        mToggleButton=(ToggleButton)findViewById(R.id.togglebtn_securityfunction);
+        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     mStatusTV.setText("防盗保护已经开启");
-                }else{
+                }else {
                     mStatusTV.setText("防盗保护没有开启");
                 }
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putBoolean("protecting",true);
+                SharedPreferences.Editor editor=sp.edit();
+                editor.putBoolean("protecting",isChecked);
                 editor.commit();
             }
         });
-
-        boolean protecting = sp.getBoolean("protecting",true);
-        if(protecting){
+        boolean protecting=sp.getBoolean("protecting",true);
+        if (protecting){
             mStatusTV.setText("防盗保护已经开启");
             mToggleButton.setChecked(true);
         }else{
@@ -53,18 +46,18 @@ public class SetUp4Activity extends BaseSetUpActivity {
             mToggleButton.setChecked(false);
         }
     }
-
     @Override
     public void showNext() {
-        SharedPreferences.Editor editor = sp.edit();
+        SharedPreferences.Editor editor=sp.edit();
         editor.putBoolean("isSetUp",true);
         editor.commit();
-        startActivityAndFinishSelf(LostFindActivity.class);
+        startActivityAndFinishShelf(LostFindActivity.class);
     }
 
     @Override
 
     public void showPre() {
-        startActivityAndFinishSelf(SetUp3Activity.class);
+        startActivityAndFinishShelf(Setup3Activity.class);
     }
+
 }

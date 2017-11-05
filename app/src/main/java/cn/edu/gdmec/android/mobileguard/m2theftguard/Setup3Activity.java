@@ -13,47 +13,48 @@ import cn.edu.gdmec.android.mobileguard.R;
 
 
 /**
- * Created by Chino-Lee on 2017/10/14.
+ * Created by pc on 2017/10/11.
  */
 
-public class SetUp3Activity extends BaseSetUpActivity implements View.OnClickListener{
+public class Setup3Activity extends BaseSetUpActivity implements View.OnClickListener{
     private EditText mInputPhone;
-    int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_3);
         ((RadioButton) findViewById(R.id.rb_third)).setChecked(true);
-
+        initView();
+    }
+    private void initView() {
+        ((RadioButton)findViewById(R.id.rb_third)).setChecked(true);
         findViewById(R.id.btn_addcontact).setOnClickListener(this);
-        mInputPhone = (EditText) findViewById(R.id.et_inputphone);
-        String safephone = sp.getString("safephone",null);
-        if(!TextUtils.isEmpty(safephone)){
+        mInputPhone=(EditText)findViewById(R.id.et_inputphone);
+        String safephone=sp.getString("safephone",null);
+        if (!TextUtils.isEmpty(safephone)){
             mInputPhone.setText(safephone);
         }
     }
-
     @Override
     public void showNext() {
-        String safePhone = mInputPhone.getText().toString().trim();
-        if(TextUtils.isEmpty(safePhone)){
-            Toast.makeText(this,"请输入安全号码",Toast.LENGTH_LONG).show();
+        String safePhone=mInputPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(safePhone)){
+            Toast.makeText(this,"请输入安全号码",Toast.LENGTH_SHORT).show();
             return;
         }
-        SharedPreferences.Editor edit = sp.edit();
-        edit.putString("safepone",safePhone);
+        SharedPreferences.Editor edit=sp.edit();
+        edit.putString("safephone",safePhone);
         edit.commit();
-        startActivityAndFinishSelf(SetUp4Activity.class);
+        startActivityAndFinishShelf(Setup4Activity.class);
     }
 
     @Override
     public void showPre() {
-        startActivityAndFinishSelf(SetUp2Activity.class);
+        startActivityAndFinishShelf(Setup2Activity.class);
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()){
+    public void onClick(View v) {
+        switch (v.getId()){
             case R.id.btn_addcontact:
                 startActivityForResult(new Intent(this,ContactSelectActivity.class),0);
                 break;
@@ -62,8 +63,8 @@ public class SetUp3Activity extends BaseSetUpActivity implements View.OnClickLis
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(data!=null){
-            String phone = data.getStringExtra("phone");
+        if (data!=null){
+            String phone =data.getStringExtra("phone");
             mInputPhone.setText(phone);
         }
     }

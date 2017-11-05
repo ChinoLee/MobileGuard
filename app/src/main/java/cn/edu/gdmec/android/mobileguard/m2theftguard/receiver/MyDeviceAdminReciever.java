@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by Chino-Lee on 2017/10/26.
+ * Created by student on 17/10/17.
  */
 
-public class MyDeviceAdminReceiver extends BroadcastReceiver{
+public class MyDeviceAdminReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 

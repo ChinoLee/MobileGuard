@@ -14,7 +14,7 @@ import cn.edu.gdmec.android.mobileguard.R;
 
 
 /**
- * Created by Chino-Lee on 2017/10/14.
+ * Created by 10255 on 2017/10/9.
  */
 
 public class InterPasswordDialog extends Dialog implements View.OnClickListener{

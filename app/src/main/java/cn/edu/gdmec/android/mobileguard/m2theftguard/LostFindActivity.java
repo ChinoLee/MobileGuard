@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,49 +15,40 @@ import android.widget.ToggleButton;
 import cn.edu.gdmec.android.mobileguard.R;
 
 
-/**
- * Created by Chino-Lee on 2017/10/14.
- */
-
-public class LostFindActivity extends AppCompatActivity implements View.OnClickListener{
+public class LostFindActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView mSafePhoneTV;
     private RelativeLayout mInterSetupRL;
-    private SharedPreferences mSharedPreference;
+    private SharedPreferences msharedPrefences;
     private ToggleButton mToggleButton;
     private TextView mProtectStatusTV;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_lost_find);
-        mSharedPreference = getSharedPreferences("config",MODE_PRIVATE);
+        msharedPrefences=getSharedPreferences("config",MODE_PRIVATE);
         if(!isSetUp()){
             startSetup1Activity();
         }
         initView();
-    }
 
-    private boolean isSetUp() {
-        return mSharedPreference.getBoolean("isSetUp",false);
     }
-
     private void initView() {
-        TextView mTitle = (TextView) findViewById(R.id.tv_title);
-        mTitle.setText("手机防盗");
-        ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
+        TextView mTitleTV=(TextView)findViewById(R.id.tv_title);
+        mTitleTV.setText("手机防盗");
+        ImageView mLeftImgv=(ImageView)findViewById(R.id.imgv_leftbtn);
         mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
         findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.purple));
-        mSafePhoneTV = (TextView) findViewById(R.id.tv_safephone);
-        mSafePhoneTV.setText(mSharedPreference.getString("safephone",""));
-        mToggleButton = (ToggleButton) findViewById(R.id.togglebtn_lostfind);
-        mInterSetupRL = (RelativeLayout) findViewById(R.id.rl_inter_setup_wizard);
+        mSafePhoneTV=(TextView)findViewById(R.id.tv_safephone);
+        mSafePhoneTV.setText(msharedPrefences.getString("safephone",""));
+        mToggleButton=(ToggleButton)findViewById(R.id.togglebtn_lostfind);
+        mInterSetupRL=(RelativeLayout)findViewById(R.id.rl_inter_setup_wizard);
         mInterSetupRL.setOnClickListener(this);
-        mProtectStatusTV = (TextView) findViewById(R.id.tv_lostfind_protectstauts);
-        //查询手机防盗是否开启，默认为开启
-        boolean protecting = mSharedPreference.getBoolean("protecting",true);
-        if(protecting){
-            mProtectStatusTV.setText("防盗保护已经开启");
+        mProtectStatusTV=(TextView)findViewById(R.id.tv_lostfind_protectstauts);
+        boolean protecting = msharedPrefences.getBoolean("protecting",true);
+        if (protecting){
+            mProtectStatusTV.setText("防盗保护已开启");
             mToggleButton.setChecked(true);
         }else{
             mProtectStatusTV.setText("防盗保护没有开启");
@@ -66,34 +58,35 @@ public class LostFindActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    mProtectStatusTV.setText("防盗保护已经开启");
+                    mProtectStatusTV.setText("防盗保护已开启");
                 }else{
                     mProtectStatusTV.setText("防盗保护没有开启");
                 }
-                SharedPreferences.Editor editor = mSharedPreference.edit();
+                SharedPreferences.Editor editor=msharedPrefences.edit();
                 editor.putBoolean("protecting",isChecked);
                 editor.commit();
             }
         });
-    }
 
+    }
+    private boolean isSetUp() {
+        return msharedPrefences.getBoolean("isSetUp",false);
+    }
     private void startSetup1Activity() {
-        Intent intent = new Intent(LostFindActivity.this,SetUp1Activity.class);
+        Intent intent = new Intent(LostFindActivity.this,Setup1Activity.class);
         startActivity(intent);
         finish();
     }
-
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
+    public void onClick(View v) {
+        switch (v.getId()){
             case R.id.rl_inter_setup_wizard:
-                //重新进入设置导向
                 startSetup1Activity();
                 break;
             case R.id.imgv_leftbtn:
-                //重新进入设置导向
                 finish();
                 break;
         }
+
     }
 }
