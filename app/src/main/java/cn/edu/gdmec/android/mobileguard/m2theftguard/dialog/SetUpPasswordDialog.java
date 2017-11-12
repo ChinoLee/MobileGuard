@@ -40,7 +40,7 @@ public class SetUpPasswordDialog extends Dialog implements View.OnClickListener{
         mFirstPWDET=(EditText)findViewById(R.id.et_firstpwd);
         mAffirmET=(EditText)findViewById(R.id.et_affirm_password);
         findViewById(R.id.btn_ok).setOnClickListener(this);
-        findViewById(R.id.btn_cancel).setOnClickListener(this);
+        findViewById(R.id.btn_cancle).setOnClickListener(this);
     }
     public void setTitle(String title){
         if(!TextUtils.isEmpty(title)){
@@ -54,7 +54,7 @@ public class SetUpPasswordDialog extends Dialog implements View.OnClickListener{
                 myCallBack.ok();
                 System.out.print("SetupPasswordDialog");
                 break;
-            case R.id.btn_cancel:
+            case R.id.btn_cancle:
                 myCallBack.cancel();
                 break;
         }
