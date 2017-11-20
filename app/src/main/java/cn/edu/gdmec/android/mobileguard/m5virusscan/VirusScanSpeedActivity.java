@@ -32,6 +32,7 @@ import cn.edu.gdmec.android.mobileguard.m5virusscan.entity.ScanAppInfo;
 
 /**
  * Created by student on 17/10/17.
+ * 242452424242
  */
 
 public class VirusScanSpeedActivity extends AppCompatActivity implements View.OnClickListener{
