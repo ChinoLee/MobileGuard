@@ -1,15 +1,23 @@
 package cn.edu.gdmec.android.mobileguard;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
     private TextView mTvVersion;
     private String mVersion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);}
       /*  requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
         mVersion = MyUtils.getVersion(getApplicationContext());
@@ -23,5 +31,17 @@ public class SplashActivity extends AppCompatActivity {
                 versionUpdateUtils.getCloudVersion();
             }
         }.start();*/
+public static void installApk(Activity activity,String apkFile){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setDataAndType(Uri.fromFile(
+                new File(Environment.getExternalStoragePublicDirectory("/download/").getPath()+"/"+apkFile)),
+                "application/Vnd.android.package-archive");
+        activity.startActivityForResult(intent,0);
+
+
     }
-}
+    }
+
+
+
