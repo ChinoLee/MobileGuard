@@ -52,7 +52,7 @@ public class CleanCacheActivity extends AppCompatActivity implements View.OnClic
             }
         };
     };
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,8 +1,7 @@
 package cn.edu.gdmec.android.mobileguard.m6cleancache;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.IPackageDataObserver;
+import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,54 +27,52 @@ import cn.edu.gdmec.android.mobileguard.R;
 import cn.edu.gdmec.android.mobileguard.m6cleancache.adapter.CacheCleanAdapter;
 import cn.edu.gdmec.android.mobileguard.m6cleancache.entity.CacheInfo;
 
-/**
- * Created by Chino-Lee on 2017/11/20.
- */
-
 public class CacheClearListActivity extends AppCompatActivity implements View.OnClickListener {
-    protected static final int SCANNING = 100;
-    protected static final int FINISH = 101;
+    public static final int SCANNING = 100;
+    public static final int FINISH = 101;
     private AnimationDrawable animation;
-    private TextView mRecomandTV;
     private TextView mCanCleanTV;
+    private TextView mRecomandTV;
     private long cacheMemory;
     private List<CacheInfo> cacheInfos = new ArrayList<CacheInfo>();
     private List<CacheInfo> mCacheInfos = new ArrayList<CacheInfo>();
     private PackageManager pm;
     private CacheCleanAdapter adapter;
     private ListView mCacheLV;
-    private Button mCacheBtn;
+    private Button mCancleBtn;
     private Thread thread;
-    private Handler handler = new Handler() {
+    private Handler handler = new Handler(){
+        @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
+            switch (msg.what){
                 case SCANNING:
-                    PackageInfo info = (PackageInfo) msg.obj;
-                    mRecomandTV.setText("正在扫描： " + info.packageName);
-                    mCanCleanTV.setText("已扫描缓存： " +
-                            Formatter.formatFileSize(CacheClearListActivity.this, cacheMemory));
+                    PackageInfo info = (PackageInfo)msg.obj;
+                    mRecomandTV.setText("正在扫描:"+ info.packageName);
+                    mCanCleanTV.setText("已扫描缓存:"+ Formatter.formatFileSize(CacheClearListActivity.this,cacheMemory));
+                    //在主线程添加变化后集合
                     mCacheInfos.clear();
                     mCacheInfos.addAll(cacheInfos);
+                    //listView刷新
                     adapter.notifyDataSetChanged();
                     mCacheLV.setSelection(mCacheInfos.size());
                     break;
-                case FINISH :
+                case FINISH:
+                    //扫描完了,动画停止
                     animation.stop();
-                    if (cacheMemory > 0) {
-                        mCacheBtn.setEnabled(true);
-
-                    } else {
-                        mCacheBtn.setEnabled(false);
-                        Toast.makeText(CacheClearListActivity.this, "您的手机洁净如新", Toast.LENGTH_LONG).show();
+                    if (cacheMemory>0){
+                        mCancleBtn.setEnabled(true);
+                    }else{
+                        mCancleBtn.setEnabled(false);
+                        Toast.makeText(CacheClearListActivity.this,"您的手机洁净如新",Toast.LENGTH_LONG).show();
                     }
                     break;
-
-
             }
         }
     };
 
-    protected void onCreaate(Bundle savedInstanceState) {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cache_clear_list);
         pm = getPackageManager();
@@ -84,31 +80,31 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
-        findViewById(R.id.rl_titlebar).setBackgroundColor(
-                getResources().getColor(R.color.rose_red));
-        ImageView mLeftImgv = (ImageView) findViewById(R.id.imgv_leftbtn);
+        findViewById(R.id.rl_titlebar).setBackgroundColor(getResources().getColor(R.color.rose_red));
+        ImageView mLeftImgv = (ImageView)findViewById(R.id.imgv_leftbtn);
         mLeftImgv.setOnClickListener(this);
         mLeftImgv.setImageResource(R.drawable.back);
-        ((TextView) findViewById(R.id.tv_title)).setText("缓存扫描");
-        mRecomandTV = (TextView) findViewById(R.id.tv_recommend_clean);
-        mCanCleanTV = (TextView) findViewById(R.id.tv_can_clean);
-        mCacheLV = (ListView) findViewById(R.id.lv_scancache);
-        mCacheBtn = (Button) findViewById(R.id.btn_cleanall);
-        mCacheBtn.setOnClickListener(this);
-        animation = (AnimationDrawable) findViewById(R.id.imgv_broom).getBackground();
+        ((TextView)findViewById(R.id.tv_title)).setText("缓存扫描");
+        mRecomandTV = (TextView)findViewById(R.id.tv_recommend_clean);
+        mCanCleanTV = (TextView)findViewById(R.id.tv_can_clean);
+        mCacheLV = (ListView)findViewById(R.id.lv_scancache);
+        mCancleBtn = (Button)findViewById(R.id.btn_cleanall);
+        mCancleBtn.setOnClickListener(this);
+        animation = (AnimationDrawable)findViewById(R.id.imgv_broom).getBackground();
         animation.setOneShot(false);
         animation.start();
-        adapter = new CacheCleanAdapter(this, mCacheInfos);
+        adapter = new CacheCleanAdapter(this,mCacheInfos);
         mCacheLV.setAdapter(adapter);
         fillData();
+
     }
 
     private void fillData() {
-        thread = new Thread() {
-            public void run() {
+        thread = new Thread(){
+            public void run(){
                 cacheInfos.clear();
-                List<PackageInfo> infos = pm.getInstalledPackages(0);
-                for (PackageInfo info : infos) {
+                List<PackageInfo>infos = pm.getInstalledPackages(0);
+                for (PackageInfo info:infos){
                     getCacheSize(info);
                     try {
                         Thread.sleep(50);
@@ -124,38 +120,31 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 msg.what = FINISH;
                 handler.sendMessage(msg);
             }
-
-            ;
-
         };
         thread.start();
-
     }
 
-    public void getCacheSize(PackageInfo info) {
+    private void getCacheSize(PackageInfo info) {
         try {
-            Method method = PackageManager.class.getDeclaredMethod(
-                    "getPackageSizeInfo", String.class,
-                    IPackageDataObserver.class);
-            method.invoke(pm, info.packageName, new MyPackObserver(info));
-
+            Method method = PackageManager.class.getDeclaredMethod("getPackageSizeInfo",String.class, IPackageStatsObserver.class);
+            method.invoke(pm,info.packageName,new MyPackObservr(info));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private class MyPackObserver extends
-            android.content.pm.IPackageStatsObserver.Stub {
-        private PackageInfo info;
 
-        public MyPackObserver(PackageInfo info) {
+
+    public class MyPackObservr extends IPackageStatsObserver.Stub {
+        private PackageInfo info;
+        public MyPackObservr(PackageInfo info) {
             this.info = info;
         }
-
-        public void onGetStatsCompleted(PackageStats pStats, boolean succeeded)
-                throws RemoteException {
+//        parcelable PackageStats;a
+        @Override
+        public void onGetStatsCompleted(PackageStats pStats, boolean succeeded) throws RemoteException {
             long cachesize = pStats.cacheSize;
-            if (cachesize >= 0) {
+            if (cachesize >= 0){
                 CacheInfo cacheInfo = new CacheInfo();
                 cacheInfo.cacheSize = cachesize;
                 cacheInfo.packagename = info.packageName;
@@ -165,33 +154,31 @@ public class CacheClearListActivity extends AppCompatActivity implements View.On
                 cacheMemory += cachesize;
             }
         }
-
     }
-
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.imgv_leftbtn:
                 finish();
                 break;
             case R.id.btn_cleanall:
-                if (cacheMemory > 0) {
-                    Intent intent = new Intent(this, CleanCacheActivity.class
-                    );
-                    intent.putExtra("cacheMemory", cacheMemory);
-                    startActivity(intent);
-                    finish();
-                }
-                break;
+                if (cacheMemory >0){
+                Intent intent = new Intent(this, CleanCacheActivity.class);
+                intent.putExtra("cacheMemory", cacheMemory);
+                startActivity(intent);
+                finish();
+        }
+        break;
         }
     }
 
-    protected void onDestroy(){
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
         animation.stop();
-
-        animation.stop();
-        if(thread != null){
+        if (thread!=null){
             thread.interrupt();
         }
     }
 }
+
