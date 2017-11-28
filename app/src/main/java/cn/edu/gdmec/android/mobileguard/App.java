@@ -11,19 +11,17 @@ import android.text.TextUtils;
 import android.util.Log;
 
 /**
- * Created by student on 17/10/17.13213211
+ * Created by student on 17/10/17.
  */
 
 public class App extends Application{
     @Override
-
     public void onCreate() {
         super.onCreate();
-        if(Build.VERSION.SDK_INT  >= Build.VERSION_CODES.N) {
-            StrictMode.VmPolicy.Builder  builder = new StrictMode.VmPolicy.Builder();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
-
         correctSIM();
     }
     public void correctSIM(){

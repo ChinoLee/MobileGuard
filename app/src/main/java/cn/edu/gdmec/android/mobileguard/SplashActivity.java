@@ -1,16 +1,14 @@
 package cn.edu.gdmec.android.mobileguard;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Window;
 import android.widget.TextView;
 
-import cn.edu.gdmec.android.mobileguard.m1home.HomeActivity;
-import cn.edu.gdmec.android.mobileguard.m1home.utils.MyUtils;
-import cn.edu.gdmec.android.mobileguard.m1home.utils.VersionUpdateUtils;
-
+import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
     private TextView mTvVersion;
@@ -18,30 +16,27 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+      /*  requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
         mVersion = MyUtils.getVersion(getApplicationContext());
         mTvVersion=(TextView)findViewById(R.id.tv_splash_version);
         mTvVersion.setText("版本号"+mVersion);
-        VersionUpdateUtils.DownloadCallback downloadCallback = new VersionUpdateUtils.DownloadCallback() {
-            @Override
-            public void afterDownload(String filename) {
-                MyUtils.installApk(SplashActivity.this,filename);
-            }
-        };
-        final VersionUpdateUtils versionUpdateUtils=new VersionUpdateUtils(mVersion,SplashActivity.this,downloadCallback, HomeActivity.class);
+        final VersionUpdateUtils versionUpdateUtils=new VersionUpdateUtils(mVersion,SplashActivity.this);
         new Thread(){
             @Override
             public void run(){
                 super.run();
-                versionUpdateUtils.getCloudVersion("http://android2017.duapp.com/updateinfo.html");
+                versionUpdateUtils.getCloudVersion();
             }
-        }.start();
-       /* startActivity(new Intent(this, HomeActivity.class));
-        finish();*/
+        }.start();*/
+
     }
-
+    public static void installApk(Activity activity,String apkFile){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_DEFAULT);
+        intent.setDataAndType(Uri.fromFile(
+                new File(Environment.getExternalStoragePublicDirectory("/download/").getPath()+"/"+apkFile)
+                ),"application/vnd.android.package-archive");
+        activity.startActivityForResult(intent,0);
+    }
 }
-
-
-
