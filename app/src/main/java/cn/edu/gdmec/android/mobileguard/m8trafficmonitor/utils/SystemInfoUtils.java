@@ -10,7 +10,10 @@ import java.util.List;
  */
 
 public class SystemInfoUtils {
-
+    /*
+    * 判断一个服务是否处于运行状态
+    * @param content 上下文
+    * @return*/
     public static boolean isServiceRunning(Context context, String className) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> infos = am.getRunningServices(200);
