@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/titlebar"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/titlebar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:background="@color/blue">
+        android:background="@color/blue" >
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/virusscan_icon"/>
+            android:background="@drawable/virusscan_icon" />
         <TextView
-            android:id="@+id/tv_scan_version"
+            android:id="@+id/tv_dbversion"
             style="@style/textview16sp"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/tv_lastscantime"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:textColor="@color/white"/>
-
+            android:textColor="@color/white"
+            android:text="病毒数据库版本:"/>
         <TextView
             android:id="@+id/tv_lastscantime"
             style="@style/textview16sp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -99,7 +98,7 @@
             style="@style/textview14sp"
             android:layout_below="@+id/tv_cloudscan"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/tv_cloudscan"
+            android:layout_toRightOf="@+id/imgv_cloudscan"
             android:layout_marginTop="10dp"
             android:text="云查杀，杀毒更全面"/>
 
@@ -115,7 +114,6 @@
             android:layout_height="1.0px"
             android:background="@color/black30"
             android:layout_alignParentBottom="true"/>
-
     </RelativeLayout>
 
 </LinearLayout>

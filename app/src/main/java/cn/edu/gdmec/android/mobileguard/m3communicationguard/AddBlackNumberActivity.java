@@ -66,7 +66,7 @@ public class AddBlackNumberActivity extends AppCompatActivity implements View.On
             String state=data.getStringExtra("state");
             mNameET.setText(name);
             mNumET.setText(phone);
-            mStateET.setText(state);
+            mStateET.setText("骚扰");
         }
     }
 
